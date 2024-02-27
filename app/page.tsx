@@ -1,10 +1,21 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { parse } from "csv-parse/sync";
+import _ from "lodash";
 
 export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [report, setReport] = useState({} as any);
+
+  const columnToCheck = [
+    "COMPLETE STATE",
+    "HAZARD CLASS",
+    "HYPE",
+    "MEASUREMENT REQUIRED",
+    "PERISHABLE",
+    "SKU STATE",
+  ];
 
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -18,7 +29,16 @@ export default function Home() {
           skip_empty_lines: true,
           delimiter: ",",
         });
-        console.log(records);
+
+        const obj = {};
+
+        obj["length"] = records.length;
+
+        columnToCheck.map((column) => {
+          obj[column] = _.countBy(records, column);
+        });
+
+        setReport(obj);
       };
       reader.readAsText(file);
     }
@@ -41,7 +61,7 @@ export default function Home() {
       >
         Load csv file
       </button>
-      <div className="pt-5">hello</div>
+      <pre className="pt-5">{JSON.stringify(report, null, 2)}</pre>
     </main>
   );
 }
