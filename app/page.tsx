@@ -10,11 +10,11 @@ export default function Home() {
 
   const columnToCheck = [
     "COMPLETE STATE",
-    "HAZARD CLASS",
-    "HYPE",
+    "CAPTURE LOT CODE",
     "MEASUREMENT REQUIRED",
     "PERISHABLE",
-    "SKU STATE",
+    "HAZARD CLASS",
+    "SECURITY CLASS",
   ];
 
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
