@@ -30,7 +30,7 @@ export default function Home() {
           delimiter: ",",
         });
 
-        const obj = {};
+        const obj: any = {};
 
         obj["length"] = records.length;
 
